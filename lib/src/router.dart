@@ -45,17 +45,19 @@ class FluroRouter {
     return _routeTree.matchRoute(path);
   }
 
-  void pop(BuildContext context) => Navigator.pop(context);
+  void pop(BuildContext context) => Navigator.pop<T>(context);
 
   ///
   Future navigateTo(BuildContext context, String path,
       {bool replace = false,
       bool clearStack = false,
       TransitionType transition,
+       Object arguments,
       Duration transitionDuration = const Duration(milliseconds: 250),
       RouteTransitionsBuilder transitionBuilder}) {
     RouteMatch routeMatch = matchRoute(context, path,
         transitionType: transition,
+        arguments: arguments,
         transitionsBuilder: transitionBuilder,
         transitionDuration: transitionDuration);
     Route<dynamic> route = routeMatch.route;
@@ -104,11 +106,12 @@ class FluroRouter {
   RouteMatch matchRoute(BuildContext buildContext, String path,
       {RouteSettings routeSettings,
       TransitionType transitionType,
+      Object arguments,
       Duration transitionDuration = const Duration(milliseconds: 250),
       RouteTransitionsBuilder transitionsBuilder}) {
     RouteSettings settingsToUse = routeSettings;
     if (routeSettings == null) {
-      settingsToUse = RouteSettings(name: path);
+      settingsToUse = RouteSettings(name: path, arguments: arguments);
     }
     AppRouteMatch match = _routeTree.matchRoute(path);
     AppRoute route = match?.route;
