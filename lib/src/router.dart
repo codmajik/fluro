@@ -45,7 +45,7 @@ class FluroRouter {
     return _routeTree.matchRoute(path);
   }
 
-  void pop(BuildContext context) => Navigator.pop<T>(context);
+  void pop<T>(BuildContext context, [T result]) => Navigator.pop<T>(context, result);
 
   ///
   Future navigateTo(BuildContext context, String path,
